@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link href="css/style.css" type="text/css" rel="stylesheet">
+	<meta charset="utf-8">
+	<title>films</title>
+</head>
+<body>
+	<script type="text/javascript">
+		function checkAll(obj) {
+			var items = document.getElementsByClassName("thing"), 
+			len, i;
+			for (i = 0, len = items.length; i < len; i += 1) {
+				if (items.item(i).type && items.item(i).type === "checkbox") {
+					if (obj.checked) {
+						items.item(i).checked = true;
+					} else {
+						items.item(i).checked = false;
+					}
+				}
+			}
+		}
+		function showImportMenu() {
+			var menu = document.getElementById("menu-import");
+			if (menu.style.display == "none") {
+				menu.style.display = "block";
+			}
+			else {
+				menu.style.display = "none";
+			}
+		}
+	</script>
+	<header>
+		<table align="center">
+			<tr>
+				<td class="big-text" align="left"><a href="index.php">Films</a></td>
+				<td align="right">
+					<div class="button-import">
+						<input type="button" class="button-search" value="&#8679; імпорт" title="імпорт з файлу" onclick="showImportMenu()">
+						<div id="menu-import">
+							<form enctype="multipart/form-data" action="import-film.php" method="post">
+								<input type="file" name="choice-file">
+								<p>
+									<input type="submit" name="send-file" value="імпорт">
+									</p>
+									</form>
+								</div>
+							</div>
+						</td>
+						<td>
+							<a href="add-film.php">
+								<input type="button" class="b1" value="+" title="додати фільм">
+							</a>
+						</td>
+						<td>
+							<form action="#" method="get">
+								<input type="text" name="search" class="field-search" placeholder="Назва фільму, ім'я актора">
+								<input type="submit" name="send" class="button-search" value="пошук">
+							</form>
+						</td>
+						<td class="sort-films" align="left">
+							<ul class="menu">
+								<li>
+									<a href="#">сортувати &#9660;</a>
+									<ul class="submenu">
+										<li>
+											<a href="sort-films.php?order=ASC">за назвою (А -> Я)</a>
+										</li>
+										<li>
+											<a href="sort-films.php?order=DESC">за назвою (Я -> А)</a>
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</td>
+						<td>
+							<form action="#" id="delete-selected" method="get">
+								<input type="submit" class="button-search" value="видалити" title="видалити вибрані елементи">
+							</form>
+						</td>
+					</tr>
+				</table>
+			</header>
