@@ -53,21 +53,25 @@
 							</a>
 						</td>
 						<td>
-							<form action="#" method="get">
+							<form action="" method="get">
 								<input type="text" name="search" class="field-search" placeholder="Назва фільму, ім'я актора">
 								<input type="submit" name="send" class="button-search" value="пошук">
 							</form>
 						</td>
 						<td class="sort-films" align="left">
+							<form action="" id="sort-list" method="post"></form>
 							<ul class="menu">
 								<li>
 									<a href="#">сортувати &#9660;</a>
 									<ul class="submenu">
 										<li>
-											<a href="sort-films.php?order=ASC">за назвою (А -> Я)</a>
+											<!--<a href="index.php?order=ASC">за назвою (А -> Я)</a>-->
+											<input type="submit" name="asc" value="за назвою (А -> Я)" form="sort-list">
+
 										</li>
 										<li>
-											<a href="sort-films.php?order=DESC">за назвою (Я -> А)</a>
+											<!--<a href="index.php?order=DESC">за назвою (Я -> А)</a>-->
+											<input type="submit" name="desc" value="за назвою (Я -> А)" form="sort-list">
 										</li>
 									</ul>
 								</li>

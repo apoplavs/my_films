@@ -1,29 +1,39 @@
 <?php
-//require_once('config/database.php');
+session_start();
 require_once ('TableCreator.php');
 
 $table = new TableCreator();
-//
-//if (!empty($result))
-//{
-//    print_r($result);
-//}
-//else {
-//    echo "ferfc";
-//}
+$sql = "SELECT * FROM `films`";
 require_once('header.html');
-$table->get_table("SELECT films.id, films.title, films.release_year, films.format, stars.first_name, stars.last_name FROM films JOIN stars WHERE films_stars.film = films_stars.star");
 ?>
-
 <table class="table-data" align="center">
-				<tr>
-					<th>id</th>
-					<th>назва</th>
-					<th>рік</th>
-					<th>у головних ролях</th>
-					<th><input type="checkbox" onclick="checkAll(this)" title="вибрати всі" /></th>
-				</tr>
-    </table>
+			<tr>
+				<th>id</th>
+				<th>назва</th>
+				<th>рік</th>
+				<th>формат</th>
+				<th><input type="checkbox" onclick="checkAll(this)" title="вибрати всі" /></th>
+			</tr>
+	<?php
+    if (isset($_GET['search']))
+    {
+        $sql .= "WHERE `films`.`title` LIKE '%$_GET[search]%'";
+    }
+    if (isset($_POST['desc']))
+    {
+        $sql .= "ORDER BY `films`.`title` DESC";
+    }
+    if (isset($_POST['asc']))
+    {
+        $sql .= "ORDER BY `films`.`title` ASC";
+    }
+    $table_data = $table->get_table($sql);
+    echo $table_data;
+    print_r($_GET);
+    echo "<br/>";
+    print_r($_POST);
+	?>
+</table>
 
 </body>
 </html>
