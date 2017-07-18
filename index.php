@@ -1,9 +1,8 @@
 <?php
-session_start();
 require_once ('TableCreator.php');
 
 $table = new TableCreator();
-$sql = "SELECT * FROM `films`";
+$sql = "SELECT DISTINCT `films`.`id`, `films`.`title`, `films`.`release_year`, `films`.`format` FROM `films`";
 require_once('header.html');
 ?>
 <table class="table-data" align="center">
@@ -17,13 +16,16 @@ require_once('header.html');
 	<?php
     if (isset($_GET['search']))
     {
-        $sql .= "WHERE `films`.`title` LIKE '%$_GET[search]%'";
+        $sql .= "JOIN `films_stars` ON `films`.`id` = `films_stars`.`film`
+        JOIN `stars` ON `stars`.`id` = `films_stars`.`star`
+        WHERE `films`.`title` LIKE '%$_GET[search]%' OR `stars`.`first_name`
+        LIKE '%$_GET[search]%' OR `stars`.`last_name` LIKE '%$_GET[search]%'";
     }
     if (isset($_POST['desc']))
     {
         $sql .= "ORDER BY `films`.`title` DESC";
     }
-    if (isset($_POST['asc']))
+    else if (isset($_POST['asc']))
     {
         $sql .= "ORDER BY `films`.`title` ASC";
     }

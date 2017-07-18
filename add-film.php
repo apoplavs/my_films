@@ -1,18 +1,12 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Add Film</title>
-	<!-- <link rel="stylesheet" href="css/style.css"/> -->
-	<!-- <link rel="import" href="test.html"/> -->
-	<?php require_once("test.html") ?>
+<?php
+require_once("header.html")
+?>
 	<script>
-		
 		function checkForm(){
 			if( document.getElementById('film_name').value.lenght < 1 ) {
 				alert('name is required');
 				return false;
 			}
-			
 			if( document.getElementById('film_year').value.length != 4 ) {
 				alert('year is required');
 				return false;
@@ -21,22 +15,10 @@
 				alert('format is required');
 				return false;
 			}
-			
 			return true;
 		}
-		
-		
 	</script>
-</head>
-
-<body>
-	<div class="container">
-		<div class="menu">
-<a href="/admin/film">Films</a> | <a href="/admin/film/bulk">Film Bulk Upload</a>
-</div>
-		
-		<div class="content">
-			<h1>Film "New Film"</h1>
+			<h1 align="center" class="required">Додати новий фільм</h1>
 			
 			<form method="post" action="/admin/film/save">
 				<input type="hidden" name="film_id" value=""/>
@@ -81,5 +63,6 @@
 			   
 		</div>
 	</div>
+
 </body>
 </html>
