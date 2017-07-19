@@ -148,10 +148,16 @@ ul.submenu > li > input {
 .table-data tr:nth-child(odd) {
 	background-color: #e5e5e5;
 }
-
-.edit-form {
-	border: 1px solid black;
-}
-.required {
+.edit-form span {
 	color: red;
+	font-size: 10pt;
+}
+.edit-form th {
+	text-align: right;
+	padding-bottom: 5px;
+	padding-top: 5px;
+}
+.edit-form textarea {
+	max-width: 300px;
+	max-height: 200px;
 }

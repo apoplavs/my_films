@@ -5,7 +5,7 @@
  * Date: 17.07.17
  * Time: 13:36
  */
-class TableCreator
+class ConnectDB
 {
 	private $bdd;
 
@@ -49,5 +49,11 @@ class TableCreator
         }
 	return ($table);
 	}
+
+	function get_result($query) {
+        $result_statement = $this->bdd->query($query);
+        $result = $result_statement->fetchAll(PDO::FETCH_ASSOC);
+        return ($result);
+    }
 }
 ?>

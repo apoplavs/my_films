@@ -1,7 +1,7 @@
 <?php
-require_once ('TableCreator.php');
+require_once ('ConnectDB.php');
 
-$table = new TableCreator();
+$table = new ConnectDB();
 $sql = "SELECT DISTINCT `films`.`id`, `films`.`title`, `films`.`release_year`, `films`.`format` FROM `films`";
 require_once('header.html');
 ?>
