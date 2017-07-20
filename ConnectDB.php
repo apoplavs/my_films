@@ -55,5 +55,29 @@ class ConnectDB
         $result = $result_statement->fetchAll(PDO::FETCH_ASSOC);
         return ($result);
     }
+
+    function close_connection() {
+        try {
+            $this->bdd = null;
+        }
+        catch (PDOException $e)
+        {
+            echo $e->getMessage();
+        }
+    }
+    function change_data($sql) {
+	    if ($this->bdd->exec($sql) === 'false') {
+	        echo "<!DOCTYPE html>
+<html>
+<head>
+	<meta charset=\"utf-8\">
+	<title>error</title>
+</head>
+<body>
+<h1>Сталась помилка!</h1>
+</body>
+</html>";
+        }
+    }
 }
 ?>

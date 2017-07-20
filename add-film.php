@@ -1,20 +1,25 @@
 <?php
 require_once("header.html");
 print_r($_POST);
+if (!empty($_POST))
+{
+$db = new ConnectDB();
+}
+
 ?>
 <link href="css/style.css" type="text/css" rel="stylesheet">
 <script>
     function checkForm(){
-        if( document.getElementById('film_name').value.lenght < 1 ) {
-            alert('name is required');
+        if(document.getElementById('film_name').value == '') {
+            alert('вкажіть назву фільму');
             return false;
         }
-        if( document.getElementById('film_year').value.length != 4 ) {
-            alert('year is required');
+        if(document.getElementById('film_name').value.length >= 64) {
+            alert('назва фільму занадто довга');
             return false;
         }
         if( document.getElementById('format_id').value == 0 ) {
-            alert('format is required');
+            alert('необхідно вибрати формат фільму');
             return false;
         }
         return true;

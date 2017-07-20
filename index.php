@@ -34,6 +34,7 @@ require_once('header.html');
     print_r($_GET);
     echo "<br/>";
     print_r($_POST);
+    $table->close_connection();
 	?>
 </table>
 
