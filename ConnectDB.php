@@ -74,9 +74,10 @@ class ConnectDB
 	<title>error</title>
 </head>
 <body>
-<h1>Сталась помилка!</h1>
+<h1 align='center'>Сталась помилка!</h1>
 </body>
 </html>";
+	        die();
         }
     }
 }

@@ -1,11 +1,36 @@
 <?php
-require_once("header.html");
-print_r($_POST);
+require_once('header.html');
+require_once('ConnectDB.php');
 if (!empty($_POST))
 {
 $db = new ConnectDB();
+$db->change_data("INSERT INTO `db_films`.`films` (id, title, release_year, format) VALUES (NULL, '$_POST[film_name]', '$_POST[film_year]', '$_POST[format_id]')");
+    if (!empty($_POST['actors']))
+    {
+       $actors = preg_replace('/\s+/', ' ', $_POST['actors']);
+       $actors = trim($actors);
+        print_r($actors);
+        echo "<br>";
+       $actors = preg_split('/(\w+ \w+)*/', $actors);
+       print_r($actors);
+    }
+$db->close_connection();
+    echo "<!DOCTYPE html>
+<html>
+<head>
+	<title>setup</title>
+</head>
+<body>
+	<h3 align='center'>фільм додано в базу данних</h3>
+	<div style='text-align: center'>
+		<a href='index.php'>
+		<button>на головну</button>
+		</a>
+	</div>
+</body>
+</html>";
+    die();
 }
-
 ?>
 <link href="css/style.css" type="text/css" rel="stylesheet">
 <script>
@@ -65,7 +90,7 @@ $db = new ConnectDB();
         </tr>
         <tr>
             <th>Список акторів:</th>
-            <td><textarea name="actors"></textarea></td>
+            <td><textarea name="actors" placeholder="актор 1, актор 2, актор 3,..."></textarea></td>
         </tr>
         <tr>
             <td></td>
