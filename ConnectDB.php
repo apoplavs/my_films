@@ -56,29 +56,52 @@ class ConnectDB
         return ($result);
     }
 
+    function change_data($sql) {
+        if ($this->bdd->exec($sql) === 'false') {
+            show_message("Сталась помилка!");
+        }
+    }
+
     function close_connection() {
         try {
             $this->bdd = null;
         }
-        catch (PDOException $e)
-        {
+        catch (PDOException $e) {
             echo $e->getMessage();
         }
     }
-    function change_data($sql) {
-	    if ($this->bdd->exec($sql) === 'false') {
-	        echo "<!DOCTYPE html>
-<html>
-<head>
-	<meta charset=\"utf-8\">
-	<title>error</title>
-</head>
-<body>
-<h1 align='center'>Сталась помилка!</h1>
-</body>
-</html>";
-	        die();
+
+    function add_actors($id_film, $actors) {
+        $actors = preg_replace('/\s+/', ' ', $actors);
+        $actors = trim($actors);
+        $actors = preg_split('/, /', $actors);
+        print_r($actors);
+        echo "<br>";
+        foreach ($actors as $actor) {
+            if (strlen($actor) > 1) {
+                $actor = explode(' ', $actor, 2);
+                print_r($actor);
+                echo "<br>";
+            }
         }
     }
+}
+
+function show_message($message) {
+    echo "<!DOCTYPE html>
+<html>
+<head>
+	<title>setup</title>
+</head>
+<body>
+	<h3 align='center'>$message</h3>
+	<div style='text-align: center'>
+		<a href='index.php'>
+		<button>на головну</button>
+		</a>
+	</div>
+</body>
+</html>";
+    die();
 }
 ?>
