@@ -72,16 +72,23 @@ class ConnectDB
     }
 
     function add_actors($id_film, $actors) {
-        $actors = preg_replace('/\s+/', ' ', $actors);
         $actors = trim($actors);
+        $actors = preg_replace('/\s+/', ' ', $actors);
         $actors = preg_split('/, /', $actors);
-        print_r($actors);
-        echo "<br>";
         foreach ($actors as $actor) {
             if (strlen($actor) > 1) {
                 $actor = explode(' ', $actor, 2);
-                print_r($actor);
-                echo "<br>";
+                $found_actor = $this->get_result("SELECT `stars`.`id`, `stars`.`first_name`, `stars`.`last_name`
+                FROM `stars` WHERE `stars`.`first_name` LIKE '$actor[0]' AND `stars`.`last_name` LIKE '$actor[1]'");
+                if (empty($found_actor)) {
+                    $this->change_data("INSERT INTO `db_films`.`stars` (id, first_name, last_name)
+                    VALUES (NULL, '$actor[0]', '$actor[1]')");
+                }
+                $id_actor = $this->get_result("SELECT `stars`.`id` FROM `stars`
+                WHERE `stars`.`first_name` LIKE '$actor[0]' AND `stars`.`last_name` LIKE '$actor[1]'");
+                $id_actor = $id_actor[0];
+                $this->change_data("INSERT INTO `db_films`.`films_stars` (id, film, star)
+                VALUE (NULL, '$id_film[id]', '$id_actor[id]')");
             }
         }
     }

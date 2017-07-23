@@ -3,10 +3,8 @@ require_once('header.html');
 require_once('ConnectDB.php');
 if (!empty($_POST))
 {
-    print_r($_POST);
-    echo "<br>";
 $db = new ConnectDB();
-//$db->change_data("INSERT INTO `db_films`.`films` (id, title, release_year, format) VALUES (NULL, '$_POST[film_name]', '$_POST[film_year]', '$_POST[format_id]')");
+$db->change_data("INSERT INTO `db_films`.`films` (id, title, release_year, format) VALUES (NULL, '$_POST[film_name]', '$_POST[film_year]', '$_POST[format_id]')");
     if (!empty($_POST['actors'])) {
         $id_film = $db->get_result("SELECT MAX(id) AS id FROM `db_films`.`films`");
         $id_film = $id_film[0];
