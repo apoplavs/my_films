@@ -38,10 +38,6 @@ $db->close_connection();
 <form method="post" action="">
     <table class="edit-form" align="center">
         <tr>
-            <th>ID:</th>
-            <td name="film_id" id="film_id">5</td>
-        </tr>
-        <tr>
             <th>Назва:<span>*</span></th>
             <td><input type="text" name="film_name" id="film_name" placeholder="новий фільм" /></td>
         </tr>

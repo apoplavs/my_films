@@ -57,6 +57,7 @@ class ConnectDB
     }
 
     function change_data($sql) {
+	    $sql = $this->bdd->quote($sql);
         if ($this->bdd->exec($sql) === 'false') {
             show_message("Сталась помилка!");
         }
