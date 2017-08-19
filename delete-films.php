@@ -13,7 +13,7 @@ if (!empty($_POST)) {
         $id = intval($id_film);
         $actors = $db->get_result("SELECT `films_stars`.`star`
         FROM `films_stars` WHERE `films_stars`.`film` = $id");
-        $db->change_data("DELETE FROM `films` WHERE `id` = $id");
+        $db->change_data("DELETE FROM `films` WHERE `films`.`id` = $id;");
         if (!empty($actors)) {
             foreach ($actors as $actor) {
                 $id_actor = intval($actor['star']);

@@ -8,12 +8,10 @@ $db->change_data("INSERT INTO `db_films`.`films` (id, title, release_year, forma
     if (!empty($_POST['actors'])) {
         $id_film = $db->get_result("SELECT MAX(id) AS id FROM `db_films`.`films`");
         $id_film = $id_film[0];
-        print_r($id_film);
-        echo "<br>";
        $db->add_actors($id_film['id'],$_POST['actors']);
     }
 $db->close_connection();
-    show_message("фільм додано в базу данних");
+    ConnectDB::show_message("фільм додано в базу данних");
 }
 ?>
 <link href="css/style.css" type="text/css" rel="stylesheet">

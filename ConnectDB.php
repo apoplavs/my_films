@@ -9,7 +9,7 @@ class ConnectDB
 {
 	private $bdd;
 
-	function __construct()
+    public function __construct()
 	{
 		require_once('config/database.php');
 		try
@@ -24,7 +24,7 @@ class ConnectDB
 		$this->bdd = $bdd;
 	}
 
-	function get_table($query) {
+    public function get_table($query) {
 		$table = "	";
 		$result_statement = $this->bdd->query($query);
 		$result = $result_statement->fetchAll(PDO::FETCH_ASSOC);
@@ -50,29 +50,41 @@ class ConnectDB
 	return ($table);
 	}
 
-	function get_result($query) {
-        $result_statement = $this->bdd->query($query);
-        $result = $result_statement->fetchAll(PDO::FETCH_ASSOC);
+    public function get_result($query) {
+        try {
+            $result_statement = $this->bdd->query($query);
+            $result = $result_statement->fetchAll(PDO::FETCH_ASSOC);
+        } catch(PDOException $e)
+        {
+            die('Error : ' . $e->getMessage());
+        }
+
         return ($result);
     }
 
-    function change_data($sql) {
-	    $sql = $this->bdd->quote($sql);
-        if ($this->bdd->exec($sql) === 'false') {
-            show_message("Сталась помилка!");
+    public function change_data($sql) {
+        print_r($sql);
+        echo '<hr>';
+        $this->bdd->exec($sql);
+	    try {
+            $sql = $this->bdd->quote($sql);
+            $this->bdd->exec($sql);
+        } catch(PDOException $e)
+        {
+            die('Error : ' . $e->getMessage());
         }
     }
 
-    function close_connection() {
+    public function close_connection() {
         try {
             $this->bdd = null;
         }
         catch (PDOException $e) {
-            echo $e->getMessage();
+            die('Error : ' . $e->getMessage());
         }
     }
 
-    function add_actors($id_film, $actors) {
+    public function add_actors($id_film, $actors) {
         $actors = trim($actors);
         $actors = preg_replace('/\s+/', ' ', $actors);
         $actors = preg_split('/, /', $actors);
@@ -93,10 +105,9 @@ class ConnectDB
             }
         }
     }
-}
 
-function show_message($message) {
-    echo "<!DOCTYPE html>
+    public static function show_message($message) {
+        echo "<!DOCTYPE html>
 <html>
 <head>
 	<title>setup</title>
@@ -110,6 +121,9 @@ function show_message($message) {
 	</div>
 </body>
 </html>";
-    die();
+        die();
+    }
 }
+
+
 ?>
