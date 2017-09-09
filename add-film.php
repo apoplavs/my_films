@@ -11,7 +11,7 @@ $db->change_data("INSERT INTO `db_films`.`films` (id, title, release_year, forma
        $db->add_actors($id_film['id'],$_POST['actors']);
     }
 $db->close_connection();
-    ConnectDB::show_message("фільм додано в базу данних");
+    header("Location: index.php");
 }
 ?>
 <link href="css/style.css" type="text/css" rel="stylesheet">

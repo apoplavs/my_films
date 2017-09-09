@@ -6,13 +6,8 @@
  * Time: 10:21
  */
 require_once ('ConnectDB.php');
-print_r($_POST);
-echo "<hr>";
-print_r($_FILES);
 $db = new ConnectDB();
 $array_films = file($_FILES['choice-file']['name'], FILE_IGNORE_NEW_LINES | FILE_SKIP_EMPTY_LINES);
-echo "<hr>";
-print_r($array_films);
 
 $validator = array(
     'title' => 'Title: ',
@@ -41,24 +36,22 @@ while ($i < $array_len) {
     if (strcmp($format, 'VHS')
         && strcmp($format, 'DVD')
         &&strcmp($format, 'Blu-Ray')) {
-        ConnectDB::show_message('невідомий формат файлу ' . $format);
+        ConnectDB::show_message('невідомий формат фільму: ' . $format);
     }
     $i++;
     $stars = substr($array_films[$i], $validator['stars_len']);
     $i++;
-    print_r(gettype($title));
     $year = intval($year);
-    echo '<hr>'.$title.'<hr><hr><hr>';
-    $db->change_data("INSERT INTO `db_films`.`films` (id, title, release_year, format) VALUES (NULL, '$title', '$year', '$format')");
-
-    if (!empty($stars)) {
-        $id_film = $db->get_result("SELECT MAX(id) AS id FROM `db_films`.`films`");
-        $id_film = $id_film[0];
-        $db->add_actors($id_film['id'],$stars);
+    $film_exists = $db->get_result("SELECT * FROM `db_films`.`films` WHERE `title` = '$title' AND `release_year` = '$year' AND `format` = '$format'");
+    if (empty($film_exists)) {
+        $db->change_data("INSERT INTO `db_films`.`films` (`id`, `title`, `release_year`, `format`) VALUES (NULL, '$title', '$year', '$format')");
+        if (!empty($stars)) {
+            $id_film = $db->get_result("SELECT MAX(id) AS id FROM `db_films`.`films`");
+            $id_film = $id_film[0];
+            $db->add_actors($id_film['id'],$stars);
+        }
     }
-    echo $i . '<hr>';
-
 }
 $db->close_connection();
-ConnectDB::show_message("фільми імпортовано");
+header("Location: index.php");
 ?>

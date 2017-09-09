@@ -63,11 +63,7 @@ class ConnectDB
     }
 
     public function change_data($sql) {
-        print_r($sql);
-        echo '<hr>';
-        $this->bdd->exec($sql);
 	    try {
-            $sql = $this->bdd->quote($sql);
             $this->bdd->exec($sql);
         } catch(PDOException $e)
         {
@@ -92,16 +88,16 @@ class ConnectDB
             if (strlen($actor) > 1) {
                 $actor = explode(' ', $actor, 2);
                 $found_actor = $this->get_result("SELECT `stars`.`id`, `stars`.`first_name`, `stars`.`last_name`
-                FROM `stars` WHERE `stars`.`first_name` LIKE '$actor[0]' AND `stars`.`last_name` LIKE '$actor[1]'");
+                FROM `stars` WHERE `stars`.`first_name` = '$actor[0]' AND `stars`.`last_name` = '$actor[1]'");
                 if (empty($found_actor)) {
                     $this->change_data("INSERT INTO `db_films`.`stars` (id, first_name, last_name)
                     VALUES (NULL, '$actor[0]', '$actor[1]')");
                 }
                 $id_actor = $this->get_result("SELECT `stars`.`id` FROM `stars`
-                WHERE `stars`.`first_name` LIKE '$actor[0]' AND `stars`.`last_name` LIKE '$actor[1]'");
+                WHERE `stars`.`first_name` = '$actor[0]' AND `stars`.`last_name` = '$actor[1]'");
                 $id_actor = $id_actor[0];
                 $this->change_data("INSERT INTO `db_films`.`films_stars` (id, film, star)
-                VALUE (NULL, '$id_film[id]', '$id_actor[id]')");
+                VALUE (NULL, '$id_film', '$id_actor[id]')");
             }
         }
     }

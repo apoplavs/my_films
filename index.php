@@ -31,9 +31,6 @@ require_once('header.html');
     }
     $table_data = $table->get_table($sql);
     echo $table_data;
-    print_r($_GET);
-    echo "<br/>";
-    print_r($_POST);
     $table->close_connection();
 	?>
 </table>
